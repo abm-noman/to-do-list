@@ -12,16 +12,22 @@
 <body>
     <div class="container">
         <h1>To Do List</h1>
-        <div class="input_container">
-            <input type="text" class="todo-input" id="new_task" placeholder="Add new task">
+        <div class="input-container">
+            <input class="todo-input" placeholder="Add a new task...">
             <button class="add-button">
                 <i class="fa fa-plus-circle"></i>
             </button>
         </div>
 
+        <div class="filters">
+            <div class="filter" data-filter="completed">Complete</div>
+            <div class="filter" data-filter="pending">Incomplete</div>
+            <div class="delete-all">Delete All</div>
+        </div>
+
         <div class="todos-container">
             <ul class="todo-list"></ul>
-            <img src="img/empty.svg" alt="empty-image" class="empty-image">
+            <img class="empty-image" src="img/empty.svg" alt="empty-image">
         </div>
 
     </div>
