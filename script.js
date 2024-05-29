@@ -12,6 +12,9 @@ showTodos();
 
 // Define getTodoHtml method to return Todo HTML
 function getTodoHtml(todo, index) {
+    if(filter && filter != todo.status){
+        return '';
+    }
     let checked = todo.status == "completed" ? "checked" : "";
     return `<li class="todo">
     <label for = "${index}">
