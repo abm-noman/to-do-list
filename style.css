@@ -182,7 +182,7 @@ input:checked + span::before {
 
 .filter {
     color: #112233;
-    background-color: coral;
+    background-color: #e6b7eca1;
     padding: 5px 15px;
     border-radius: 100px;
     border: 2px solid #e6b7eca1;
@@ -191,12 +191,12 @@ input:checked + span::before {
 }
 
 .filter.active, .filter:hover {
-    background-color: #e6b7eca1;
+    background-color: #e6b7;
 }
 
 .delete-all {
     color: #112233;
-    background-color: coral;
+    background-color: #e6b7eca1;
     padding: 7px 15px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -204,7 +204,7 @@ input:checked + span::before {
 
 .delete-all:hover {
     border-radius: 5px;
-    background-color: #e6b7eca1;
+    background-color: #e6b7;
 }
 
 /* Media queries for responsiveness */
