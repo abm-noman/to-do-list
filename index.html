@@ -13,23 +13,22 @@
     <div class="container">
         <h1>To Do List</h1>
         <div class="input-container">
-            <input class="todo-input" placeholder="Add a new task...">
-            <button class="add-button">
+            <input class="todo-input" placeholder="Add a new task..." aria-label="Add a new task">
+            <button class="add-button" aria-label="Add task">
                 <i class="fa fa-plus-circle"></i>
             </button>
         </div>
 
         <div class="filters">
-            <div class="filter" data-filter="completed">Complete</div>
-            <div class="filter" data-filter="pending">Incomplete</div>
-            <div class="delete-all">Delete All</div>
+            <button class="filter" data-filter="completed" aria-label="Show completed tasks">Complete</button>
+            <button class="filter" data-filter="pending" aria-label="Show incomplete tasks">Incomplete</button>
+            <button class="delete-all" aria-label="Delete all tasks">Delete All</button>
         </div>
 
         <div class="todos-container">
             <ul class="todo-list"></ul>
-            <img class="empty-image" src="img/empty.svg" alt="empty-image">
+            <img class="empty-image" src="img/empty.svg" alt="No tasks available">
         </div>
-
     </div>
     <script src="script.js"></script>
 </body>

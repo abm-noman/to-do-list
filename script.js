@@ -1,32 +1,35 @@
 // Global Variable
-const input = document.querySelector("input");
-const addButton = document.querySelector("add-button");
-const emptyImage = document.querySelector("empty-image");
-const todoHtml = document.querySelector("todos");
+const input = document.querySelector(".todo-input");
+const addButton = document.querySelector(".add-button");
+const emptyImage = document.querySelector(".empty-image");
+const todoHtml = document.querySelector(".todo-list");
 let todosJson = JSON.parse(localStorage.getItem("todos")) || [];
 const deleteAllButton = document.querySelector(".delete-all");
 const filters = document.querySelectorAll(".filter");
 let filter = '';
 
+// Show Todos on Page Load
 showTodos();
 
-// Define getTodoHtml method to return Todo HTML
+// Function to Return Todo HTML
 function getTodoHtml(todo, index) {
-    if(filter && filter != todo.status){
+    if (filter && filter !== todo.status) {
         return '';
     }
-    let checked = todo.status == "completed" ? "checked" : "";
-    return `<li class="todo">
-    <label for = "${index}">
-    <input id="${index}" onclick="updateStatus(this)" type="checkbox" ${checked}>
-    <span class="${checked}">${todo.name}</span>
-    </label>
-    <button class="delete-btn" data-index="${index}" onclick="${remove(this)}"><i class="fa fa-times"></i></button>
+    let checked = todo.status === "completed" ? "checked" : "";
+    return `
+    <li class="todo">
+        <label for="${index}">
+            <input id="${index}" onclick="updateStatus(this)" type="checkbox" ${checked}>
+            <span class="${checked}">${todo.name}</span>
+        </label>
+        <button class="delete-btn" data-index="${index}"><i class="fa fa-times"></i></button>
     </li>`;
 }
 
+// Function to Show Todos
 function showTodos() {
-    if (todosJson.length == 0) {
+    if (todosJson.length === 0) {
         todoHtml.innerHTML = '';
         emptyImage.style.display = "block";
     } else {
@@ -35,66 +38,67 @@ function showTodos() {
     }
 }
 
-// Define Add Todo method and listeners
+// Function to Add Todo
 function addTodo() {
-    input.value = "";
+    let todo = input.value.trim();
+    if (!todo) return;
     todosJson.unshift({ name: todo, status: "pending" });
     localStorage.setItem("todos", JSON.stringify(todosJson));
+    input.value = "";
     showTodos();
 }
 
-input.addEventListener("keyup", e => {
-    let todo = input.value.trim();
-    if (!todo || e.key != "Enter") {
-        return;
+// Add Event Listeners
+input.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        addTodo();
     }
-    addTodo(todo);
 });
 
-addButton.addEventListener("click", () => {
-    let todo = input.value.trim();
-    if (!todo) {
-        return;
-    }
-    addTodo(todo);
-});
+addButton.addEventListener("click", addTodo);
 
+// Function to Update Todo Status
 function updateStatus(todo) {
-    let todoname = todo.parentElement.lastElementChild;
+    let todoName = todo.parentElement.lastElementChild;
     if (todo.checked) {
-        todoname.classList.add("checked");
+        todoName.classList.add("checked");
         todosJson[todo.id].status = "completed";
     } else {
-        todoname.classList.remove("checked");
+        todoName.classList.remove("checked");
         todosJson[todo.id].status = "pending";
     }
     localStorage.setItem("todos", JSON.stringify(todosJson));
 }
 
-
-function remove(todo) {
-    const index = todo.dataset.index;
+// Function to Remove Todo
+function removeTodo(event) {
+    if (!event.target.classList.contains('delete-btn')) return;
+    const index = event.target.closest('.delete-btn').dataset.index;
     todosJson.splice(index, 1);
-    showTodos();
     localStorage.setItem("todos", JSON.stringify(todosJson));
-  }
-  
-  filters.forEach(function (el) {
-    el.addEventListener("click", (e) => {
-      if (el.classList.contains('active')) {
-        el.classList.remove('active');
-        filter = '';
-      } else {
-        filters.forEach(tag => tag.classList.remove('active'));
-        el.classList.add('active');
-        filter = e.target.dataset.filter;
-      }
-      showTodos();
+    showTodos();
+}
+
+todoHtml.addEventListener("click", removeTodo);
+
+// Filter Todos
+filters.forEach((filterBtn) => {
+    filterBtn.addEventListener("click", (e) => {
+        filters.forEach(btn => btn.classList.remove('active'));
+        if (filterBtn.classList.contains('active')) {
+            filterBtn.classList.remove('active');
+            filter = '';
+        } else {
+            filterBtn.classList.add('active');
+            filter = e.target.dataset.filter;
+        }
+        showTodos();
     });
-  });
-  
-  deleteAllButton.addEventListener("click", () => {
+});
+
+// Delete All Todos
+deleteAllButton.addEventListener("click", () => {
     todosJson = [];
     localStorage.setItem("todos", JSON.stringify(todosJson));
     showTodos();
-  });
+});
